@@ -49,6 +49,29 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- swagger dependencies started -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+
+		<!-- swagger dependencies ended -->
+
+
+
+
+
 	</dependencies>
 
 	<build>
@@ -65,6 +88,39 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+
+
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<!-- RELEASE_VERSION -->
+				<version>6.0.0</version>
+				<!-- /RELEASE_VERSION -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/orderContractOpenAPI.yaml</inputSpec>
+							<generatorName>spring</generatorName>
+							<modelPackage>${project.groupId}.org.application.model</modelPackage>
+							<apiPackage>${project.groupId}.org.application.api</apiPackage>
+							<configOptions>
+								<sourceFolder>src/gen/java/main</sourceFolder>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+
+
+
+
+
 		</plugins>
 	</build>
 

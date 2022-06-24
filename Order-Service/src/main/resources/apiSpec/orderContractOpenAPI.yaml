@@ -1,0 +1,119 @@
+openapi: 3.0.0
+info:
+  title: Order Service
+  description: Order Service Operation
+  contact:
+    email: rathorvijay529@gmail.com
+  license:
+    name: Apache 2.0
+    url: https://httpd.apache.org/docs/2.4/urlmapping.html
+  version: 1.0.0
+
+tags:
+  - name: Order API
+    description: order service API
+
+
+paths:
+  /orders:
+    get:
+      summary: Getting all Orders
+      description: Listing all the Orders to know about metadata.
+      operationId: getAllOrders
+      tags:
+        - Order API
+      responses:
+        "200":
+          description: All Orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderResponse'
+        "400":
+          description: Request is not correct.
+        "404":
+          description: Endpoint is not available.
+        "500":
+          description: Something went wrong.
+  /order:
+    post:
+      tags:
+        - Order API
+      summary: Creating the new Order
+      description: Place a new Order with some specific data
+      operationId: createOrder
+      parameters:
+        - in: body
+          name: body
+          description: ""
+          required: true
+          schema:
+            $ref: '#/components/schemas/SuccessResponse'
+      responses:
+        "201":
+          description: All Orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        "400":
+          description: Request is not correct.
+        "405":
+          description: Method not allowed
+        "415":
+          description: Unsupported media type
+        "404":
+          description: Endpoint is not available.
+        "500":
+          description: Something went wrong.
+
+
+
+
+
+
+
+components:
+  schemas:
+    OrderResponse:
+      required:
+        - productName
+        - id
+        - qty
+        - orderId
+      type:
+        object
+      properties:
+        id:
+          type: integer
+          example: 20
+        productName:
+          type: string
+          example: cricket bat
+        qty:
+          type: integer
+          example: 20
+        orderId:
+          type: string
+          example: test UUID
+
+    SuccessResponse:
+      type:
+        object
+      properties:
+        message:
+          type: string
+          example: Order placed
+        code:
+          type: string
+          example: 2000XXXXYZ
+        key:
+          type: object
+          example: test key
+        keyType:
+          type: string
+          example: orderId
+
+
