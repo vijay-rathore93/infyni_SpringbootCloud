@@ -1,0 +1,231 @@
+openapi: 3.0.0
+info:
+  title: Order Service
+  description: Order Service Operation
+  contact:
+    email: rathorvijay529@gmail.com
+  license:
+    name: Apache 2.0
+    url: https://swagger.io/docs/specification/
+  version: 1.0.0
+tags:
+  - name: Order API
+    description: order service API
+paths:
+  /order:
+    post:
+      tags:
+        - Order API
+      summary: Creating the new Order
+      description: Place a new Order with some specific data
+      operationId: createOrder
+      requestBody:
+        description: Payload for creating order
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderResponse'
+      responses:
+        "201":
+          description: All Orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        "400":
+          description: Request is not correct.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "405":
+          description: Method not allowed
+        "415":
+          description: Unsupported media type
+        "404":
+          description: Endpoint is not available.
+        "500":
+          description: Something went wrong.
+  /order/all:
+    get:
+      summary: Getting all Orders
+      description: Listing all the Orders to know about metadata.
+      operationId: getAllOrders
+      tags:
+        - Order API
+      responses:
+        "200":
+          description: All Orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderResponse'
+
+        "404":
+          description: Endpoint is not available.
+        "500":
+          description: Something went wrong.
+  /order/{orderId}:
+    get:
+      summary: Returns a order by OrderId.
+      description: Getting the specific order based on OrderId.
+      operationId: getOrder
+      tags:
+        - Order API
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses:
+        "200":
+          description: Single Order
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrderResponse'
+        "400":
+          description: Request is not correct.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Endpoint is not available.
+        "500":
+          description: Something went wrong.
+
+  /order/update:
+    put:
+      summary: Updating the Order.
+      description: Updating order details  based on OrderId and updated info.
+      operationId: updateOrder
+      tags:
+        - Order API
+      requestBody:
+        description: To be Update Order Info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderResponse'
+      parameters:
+        - in: header
+          name: orderId
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        "200":
+          description: Single Order
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SuccessResponse'
+        "400":
+          description: Request is not correct.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Endpoint is not available.
+        "500":
+          description: Something went wrong.
+  /order/cancel:
+    delete:
+      summary: Cancelling the Order.
+      description: Cancelling Order  based on OrderId .
+      operationId: deleteOrder
+      tags:
+        - Order API
+      parameters:
+        - in: header
+          name: orderId
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        "200":
+          description: Single Order
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SuccessResponse'
+        "400":
+          description: Request is not correct.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Endpoint is not available.
+        "500":
+          description: Something went wrong.
+
+components:
+  schemas:
+    OrderResponse:
+      required:
+        - productName
+        - id
+        - qty
+        - orderId
+      type:
+        object
+      properties:
+        id:
+          type: integer
+          example: 20
+        productName:
+          type: string
+          example: cricket bat
+        qty:
+          type: integer
+          example: 20
+        orderId:
+          type: string
+          example: test UUID
+
+    SuccessResponse:
+      type:
+        object
+      properties:
+        message:
+          type: string
+          example: Order placed
+        code:
+          type: string
+          example: 2000XXXXYZ
+        key:
+          type: object
+          example: test key
+        keyType:
+          type: string
+          example: orderId
+    ErrorResponse:
+      type:
+        object
+      properties:
+        message:
+          type: string
+          example: Test Message
+        code:
+          type: string
+          example: 2000XXXXYZ
+        errors:
+          additionalProperties: {
+            example: test message
+          }

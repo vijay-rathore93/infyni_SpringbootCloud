@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Data
-@Table
+@Table(name="orderInfo")
 @Entity
 @Builder
 @AllArgsConstructor

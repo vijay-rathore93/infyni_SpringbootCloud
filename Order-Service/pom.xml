@@ -15,6 +15,12 @@
 	<description>Project related to Orders</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<swagger.annotations>1.6.1</swagger.annotations>
+		<javax.validation>2.0.1.Final</javax.validation>
+		<jackson.databind.nullable>0.2.1</jackson.databind.nullable>
+		<springfox.core>3.0.0</springfox.core>
+		<org.mapstruct>1.4.2.Final</org.mapstruct>
+		<openapi.generator.maven.plugin>5.0.0</openapi.generator.maven.plugin>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -50,6 +56,12 @@
 			<scope>test</scope>
 		</dependency>
 
+
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.4.4</version>
+		</dependency>
 		<!-- swagger dependencies started -->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -57,21 +69,33 @@
 			<version>3.0.0</version>
 		</dependency>
 
-
-		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger.annotations}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${javax.validation}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>${jackson.databind.nullable}</version>
+		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>3.0.0</version>
+			<artifactId>springfox-core</artifactId>
+			<version>${springfox.core}</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.4</version>
+		</dependency>
 		<!-- swagger dependencies ended -->
-
-
-
-
-
 	</dependencies>
 
 	<build>
@@ -88,28 +112,33 @@
 					</excludes>
 				</configuration>
 			</plugin>
-
-
-
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<!-- RELEASE_VERSION -->
-				<version>6.0.0</version>
-				<!-- /RELEASE_VERSION -->
+				<version>${openapi.generator.maven.plugin}</version>
 				<executions>
 					<execution>
+						<id>generate-spring-server</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/src/main/resources/orderContractOpenAPI.yaml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/apispec/orderContractOpenapi.yaml</inputSpec>
+							<output>${project.build.directory}/generated-sources</output>
 							<generatorName>spring</generatorName>
-							<modelPackage>${project.groupId}.org.application.model</modelPackage>
-							<apiPackage>${project.groupId}.org.application.api</apiPackage>
+							<addCompileSourceRoot>true</addCompileSourceRoot>
+							<modelPackage>${project.groupId}.model</modelPackage>
+							<apiPackage>${project.groupId}.api</apiPackage>
+							<packageName>${project.groupId}</packageName>
+							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
 							<configOptions>
-								<sourceFolder>src/gen/java/main</sourceFolder>
+								<dateLibrary>java8</dateLibrary>
+								<sourceFolder>swagger</sourceFolder>
+								<interfaceOnly>false</interfaceOnly>
+								<delegatePattern>true</delegatePattern>
+								<java8>true</java8>
 							</configOptions>
+
 						</configuration>
 					</execution>
 				</executions>
