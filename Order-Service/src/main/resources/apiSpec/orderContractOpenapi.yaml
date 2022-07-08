@@ -8,6 +8,9 @@ info:
     name: Apache 2.0
     url: https://swagger.io/docs/specification/
   version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+
 tags:
   - name: Order API
     description: order service API
@@ -81,16 +84,13 @@ paths:
           required: true
           description: Parameter description in CommonMark or HTML.
           schema:
-            type : integer
-            format: int64
-            minimum: 1
+            type : string
       responses:
         "200":
           description: Single Order
           content:
             application/json:
               schema:
-                items:
                   $ref: '#/components/schemas/OrderResponse'
         "400":
           description: Request is not correct.
@@ -180,7 +180,6 @@ components:
     OrderResponse:
       required:
         - productName
-        - id
         - qty
         - orderId
       type:
@@ -207,8 +206,8 @@ components:
           type: string
           example: Order placed
         code:
-          type: string
-          example: 2000XXXXYZ
+          type: integer
+          example: 20
         key:
           type: object
           example: test key

@@ -134,8 +134,8 @@
 							<configOptions>
 								<dateLibrary>java8</dateLibrary>
 								<sourceFolder>swagger</sourceFolder>
-								<interfaceOnly>false</interfaceOnly>
-								<delegatePattern>true</delegatePattern>
+								<interfaceOnly>true</interfaceOnly>
+								<delegatePattern>false</delegatePattern>
 								<java8>true</java8>
 							</configOptions>
 
@@ -143,13 +143,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
-
-
-
-
-
 		</plugins>
 	</build>
 

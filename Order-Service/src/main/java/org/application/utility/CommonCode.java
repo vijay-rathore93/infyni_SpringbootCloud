@@ -5,7 +5,7 @@ import org.vijayCode.model.SuccessResponse;
 public class CommonCode {
 
     public static SuccessResponse getSuccessResponse(String message,
-                                                     String code,
+                                                     Integer code,
                                                      Object key,
                                                      String keyType) {
         SuccessResponse successResponse=new SuccessResponse();

@@ -1,0 +1,4 @@
+server:
+  port: 9000
+  application:
+    name: Order-Service
