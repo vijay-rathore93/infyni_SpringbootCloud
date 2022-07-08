@@ -21,6 +21,7 @@
 		<springfox.core>3.0.0</springfox.core>
 		<org.mapstruct>1.4.2.Final</org.mapstruct>
 		<openapi.generator.maven.plugin>5.0.0</openapi.generator.maven.plugin>
+		<spring-cloud.version>2021.0.3</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -96,7 +97,27 @@
 			<version>1.6.4</version>
 		</dependency>
 		<!-- swagger dependencies ended -->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+
+
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 
 	<build>
 		<plugins>

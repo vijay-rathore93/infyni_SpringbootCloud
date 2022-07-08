@@ -2,3 +2,8 @@ server:
   port: 9000
   application:
     name: Order-Service
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
