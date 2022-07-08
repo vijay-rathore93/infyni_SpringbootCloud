@@ -3,6 +3,7 @@ server:
   application:
     name: Order-Service
 
+
 eureka:
   client:
     register-with-eureka: true
