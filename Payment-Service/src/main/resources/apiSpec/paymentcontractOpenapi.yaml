@@ -1,0 +1,160 @@
+openapi: 3.0.0
+info:
+  title: Payment Service
+  description: Payment Service Operation
+  contact:
+    email: rathorvijay529@gmail.com
+  license:
+    name: Apache 2.0
+    url: https://swagger.io/docs/specification/
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+
+tags:
+  - name: Payment API
+    description: Payment service API
+paths:
+  /payment:
+    post:
+      tags:
+        - Payment API
+      summary: Creating the new Payment
+      description: Place a new Payment with some specific data
+      operationId: createPayment
+      requestBody:
+        description: Payload for creating Payment
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentResponse'
+      responses:
+        "201":
+          description: All Payments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        "400":
+          description: Request is not correct.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "405":
+          description: Method not allowed
+        "415":
+          description: Unsupported media type
+        "404":
+          description: Endpoint is not available.
+        "500":
+          description: Something went wrong.
+  /payment/all:
+    get:
+      summary: Getting all Payments
+      description: Listing all the Payments to know about metadata.
+      operationId: getAllPayments
+      tags:
+        - Payment API
+      responses:
+        "200":
+          description: All Payments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentResponse'
+
+        "404":
+          description: Endpoint is not available.
+        "500":
+          description: Something went wrong.
+  /Payment/{PaymentId}:
+    get:
+      summary: Returns a Payment by PaymentId.
+      description: Getting the specific Payment based on PaymentId.
+      operationId: getPayment
+      tags:
+        - Payment API
+      parameters:
+        - name: PaymentId
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type : string
+      responses:
+        "200":
+          description: Single Payment
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/PaymentResponse'
+        "400":
+          description: Request is not correct.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "404":
+          description: Endpoint is not available.
+        "500":
+          description: Something went wrong.
+
+
+
+components:
+  schemas:
+    PaymentResponse:
+      required:
+        - productName
+        - qty
+        - PaymentId
+      type:
+        object
+      properties:
+        id:
+          type: integer
+          example: 20
+        productName:
+          type: string
+          example: cricket bat
+        qty:
+          type: integer
+          example: 20
+        PaymentId:
+          type: string
+          example: test UUID
+
+    SuccessResponse:
+      type:
+        object
+      properties:
+        message:
+          type: string
+          example: Payment placed
+        code:
+          type: integer
+          example: 20
+        key:
+          type: object
+          example: test key
+        keyType:
+          type: string
+          example: PaymentId
+    ErrorResponse:
+      type:
+        object
+      properties:
+        message:
+          type: string
+          example: Test Message
+        code:
+          type: string
+          example: 2000XXXXYZ
+        errors:
+          additionalProperties: {
+            example: test message
+          }

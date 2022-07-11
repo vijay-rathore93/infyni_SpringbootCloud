@@ -1,7 +1,7 @@
 server:
   port: 8761
   application:
-    name: Order-Service-Registry
+    name: Service-Registry
 
 
 

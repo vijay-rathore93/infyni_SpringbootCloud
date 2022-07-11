@@ -197,6 +197,19 @@ components:
         orderId:
           type: string
           example: test UUID
+        paymentInfo:
+          $ref: '#/components/schemas/PaymentResponse
+
+    PaymentResponse:
+      type:
+        object
+      properties:
+        id:
+          type: integer
+          example: 20
+        payment:
+          type: string
+          example: cricket bat
 
     SuccessResponse:
       type:
