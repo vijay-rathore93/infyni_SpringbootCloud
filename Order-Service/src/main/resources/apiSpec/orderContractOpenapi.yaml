@@ -198,7 +198,7 @@ components:
           type: string
           example: test UUID
         paymentInfo:
-          $ref: '#/components/schemas/PaymentResponse
+          $ref: '#/components/schemas/PaymentResponse'
 
     PaymentResponse:
       type:
