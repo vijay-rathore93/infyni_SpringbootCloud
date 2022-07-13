@@ -1,3 +1,7 @@
+server:
+  port: 9005
+
+
 eureka:
   client:
     register-with-eureka: true
@@ -10,4 +14,4 @@ eureka:
 
 spring:
   application:
-    name: ORDER-SERVICE
+    name: PAYMENT_SERVICE

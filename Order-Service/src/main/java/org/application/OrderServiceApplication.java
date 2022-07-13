@@ -7,8 +7,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,13 +32,19 @@ public class OrderServiceApplication implements CommandLineRunner {
         return new ModelMapper();
     }
 
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        Order order = Order.builder().orderId(UUID.randomUUID().toString()).productName("Dell Laptop").qty(12).build();
-        Order order1 = Order.builder().orderId(UUID.randomUUID().toString()).productName("Headphone").qty(1).build();
-        Order order2 = Order.builder().orderId(UUID.randomUUID().toString()).productName("Fridge").qty(2).build();
-        Order order3 = Order.builder().orderId(UUID.randomUUID().toString()).productName("TV").qty(3).build();
-        List<Order> orders= Arrays.asList(order,order1,order2,order3);
+        Order order = Order.builder().orderId("ORDER1").productName("Dell Laptop").qty(12).build();
+        Order order1 = Order.builder().orderId("ORDER2").productName("Headphone").qty(1).build();
+        Order order2 = Order.builder().orderId("ORDER3").productName("Fridge").qty(2).build();
+        Order order3 = Order.builder().orderId("ORDER4").productName("TV").qty(3).build();
+        List<Order> orders = Arrays.asList(order, order1, order2, order3);
         orderRepo.saveAll(orders);
     }
 }

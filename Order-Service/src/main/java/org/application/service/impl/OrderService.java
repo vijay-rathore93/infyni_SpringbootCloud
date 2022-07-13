@@ -8,9 +8,13 @@ import org.application.entity.Order;
 import org.application.exception.OrderException;
 import org.application.repo.OrderRepo;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.vijayCode.model.OrderResponse;
+import org.vijayCode.model.PaymentResponse;
 import org.vijayCode.model.SuccessResponse;
 
 import java.util.List;
@@ -26,6 +30,11 @@ public class OrderService {
     private final OrderRepo orderRepo;
 
     private final ModelMapper modelMapper;
+
+    private final RestTemplate restTemplate;
+
+    @Value("${payment.base.url}")
+    private String paymentServiceEndpoint;
 
     public List<OrderResponse> getAllOrders() {
         List<Order> orders = orderRepo.findAll();
@@ -43,7 +52,15 @@ public class OrderService {
 
     public OrderResponse getOrder(String orderId) {
         Order order = orderRepo.findByOrderId(orderId).orElseThrow(() -> new OrderException("No Order Found.."));
-        return modelMapper.map(order, OrderResponse.class);
+        PaymentResponse paymentResponse = null;
+        //calling payment-service based on orderId
+        ResponseEntity<PaymentResponse> responseEntity = restTemplate.getForEntity(paymentServiceEndpoint + orderId, PaymentResponse.class);
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            paymentResponse = responseEntity.getBody();
+        }
+        OrderResponse orderResponse = modelMapper.map(order, OrderResponse.class);
+        orderResponse.setPaymentInfo(paymentResponse);
+        return orderResponse;
     }
 }
 

@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
-@Table(name="paymentInfo")
+@Table(name = "paymentInfo")
 @Entity
 @Builder
 @AllArgsConstructor
@@ -21,8 +21,10 @@ public class Payment {
     @SequenceGenerator(name = "payment_seq", initialValue = 1000, sequenceName = "payment_seq_name")
     private Integer id;
 
-    private String amount;
-    private LocalDate paymentDate;
+    private String transactionId;
+    private String orderId;
+    private String paymentStatus;
+    private Double amount;
 
 
 }

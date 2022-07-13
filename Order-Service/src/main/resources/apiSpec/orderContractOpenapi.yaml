@@ -207,9 +207,20 @@ components:
         id:
           type: integer
           example: 20
-        payment:
+        transactionId:
           type: string
-          example: cricket bat
+          example: testTransaction
+        orderId:
+          type: string
+          example: testOrderId
+        paymentStatus:
+          type: string
+          example: testPaymentStatus
+        amount:
+          type: integer
+          example: 12345
+
+
 
     SuccessResponse:
       type:
