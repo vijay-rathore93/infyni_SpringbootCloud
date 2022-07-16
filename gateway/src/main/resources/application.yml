@@ -11,3 +11,25 @@ eureka:
 spring:
   application:
     name: API-GATEWAY
+
+
+
+cloud:
+  gateway:
+    routes:
+      ## ORDER SERVICE
+      - id: order-service
+        #uri: lb://internet-banking-user-service
+        uri: http://localhost:8080
+        predicates:
+          - Path=/order-service/**
+        filters:
+          - StripPrefix=1
+      ## PAYMENT SERVICE
+      - id: payment-service
+        #uri: lb://internet-banking-fund-transfer-service
+        uri: http://localhost:9005
+        predicates:
+          - Path=/payment-service/**
+        filters:
+          - StripPrefix=1

@@ -6,7 +6,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
-
+server:
+  port: 8080
+  contextPath: /order-service
 
 spring:
   application:
