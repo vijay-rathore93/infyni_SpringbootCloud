@@ -1,13 +1,21 @@
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    hostname: localhost
-
-
+server:
+  port: 8090
 spring:
   application:
     name: CONFIG-SERVER
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/vijay-rathore93/config-server-repo
+          search-paths: properties
+          default-label: master
+          username: vijay-rathore93
+          password: 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
+
+
+
+          # http://<host>:<port>/<file-name>/<profile>
+          #if no profile then default
+
+
