@@ -10,6 +10,7 @@ import org.vijayCode.PaymentService.service.PaymentService;
 
 @Slf4j
 @RestController
+//@RequestMapping("/payment-service")
 @RequiredArgsConstructor
 public class PaymentController {
 

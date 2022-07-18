@@ -1,5 +1,5 @@
 server:
-  port: 9005
+  port: 9007
   contextPath: /payment-service
 
 
@@ -15,4 +15,4 @@ eureka:
 
 spring:
   application:
-    name: PAYMENT_SERVICE
+    name: payment-service

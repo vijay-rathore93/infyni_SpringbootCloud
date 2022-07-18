@@ -1,16 +1,14 @@
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    hostname: localhost
-
-
+server:
+  port: 9009
+  error:
+    whitelabel:
+      enabled: false
 spring:
   application:
     name: API-GATEWAY
+    cloud:
+      config:
+        uri: http://localhost:8090
 
 
 
@@ -22,14 +20,11 @@ cloud:
         #uri: lb://internet-banking-user-service
         uri: http://localhost:8080
         predicates:
-          - Path=/order-service/**
-        filters:
-          - StripPrefix=1
+          - Path=/order/**
+
       ## PAYMENT SERVICE
       - id: payment-service
         #uri: lb://internet-banking-fund-transfer-service
         uri: http://localhost:9005
         predicates:
           - Path=/payment-service/**
-        filters:
-          - StripPrefix=1

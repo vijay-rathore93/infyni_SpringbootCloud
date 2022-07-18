@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.vijayCode.api.OrderApi;
 import org.vijayCode.model.OrderResponse;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
+@RequestMapping("/order-service")
 @RequiredArgsConstructor
 public class OrderApiController implements OrderApi {
 
