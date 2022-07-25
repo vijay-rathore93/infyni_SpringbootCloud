@@ -7,6 +7,11 @@ spring:
   application:
     name: API-GATEWAY
     cloud:
+      #gateway:
+        #discovery:
+          #locator:
+            #enabled: true
+            #lower-case-service-id: true
       config:
         uri: http://localhost:8090
 
@@ -15,16 +20,20 @@ spring:
 cloud:
   gateway:
     routes:
-      ## ORDER SERVICE
       - id: order-service
-        #uri: lb://internet-banking-user-service
-        uri: http://localhost:8080
+        #url:  http://localhost:8080/
+        url:  lb://order-service/
         predicates:
-          - Path=/order/**
+          - Path:/order-service/**
+        #filters:
+          #- name: PreFilter
+          #- name: PostFilter
 
-      ## PAYMENT SERVICE
+
+
       - id: payment-service
-        #uri: lb://internet-banking-fund-transfer-service
-        uri: http://localhost:9005
+        #url: http://localhost:8081/
+        url:  lb://payment-service/
         predicates:
-          - Path=/payment-service/**
+          - Path:/payment-service/**
+

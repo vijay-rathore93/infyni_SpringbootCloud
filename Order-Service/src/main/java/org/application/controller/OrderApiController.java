@@ -1,5 +1,6 @@
 package org.application.controller;
 
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/order-service")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class OrderApiController implements OrderApi {
 
@@ -42,6 +43,7 @@ public class OrderApiController implements OrderApi {
     }
 
     @Override
+
     public ResponseEntity<OrderResponse> getOrder(String orderId) {
         return new ResponseEntity<>(orderService.getOrder(orderId),HttpStatus.OK);
     }
@@ -51,4 +53,6 @@ public class OrderApiController implements OrderApi {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
+
+
 }

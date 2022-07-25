@@ -18,6 +18,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handlingException(Exception exception){
+        exception.printStackTrace();
         return new ResponseEntity<>(getErrorResponse(exception.getLocalizedMessage()),
                 HttpStatus.BAD_REQUEST);
     }

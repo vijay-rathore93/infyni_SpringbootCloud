@@ -32,6 +32,11 @@ public class PaymentService {
 
 
     public Payment findPaymentHistoryByOrderId(String orderId) {
+        /*try {
+            Thread.sleep(50000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }*/
         Payment payment=paymentRepo.findByOrderId(orderId);
         return payment ;
     }

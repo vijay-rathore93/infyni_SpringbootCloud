@@ -1,11 +1,53 @@
-
 server:
   port: 8080
-  #contextPath: /order-service
 
 spring:
   application:
-    name: ORDER-SERVICE
+    name: order-service
   cloud:
     config:
       uri: http://localhost:8090
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      paymentService:
+        registerHealthIndicator: true
+        automatic-transition-from-open-to-half-open-enabled: true
+        failure-rate-threshold: 80
+        permitted-number-of-calls-in-half-open-state: 4
+        sliding-window-size: 10
+        sliding-window-type: COUNT_BASED
+        wait-duration-in-open-state: 10s
+  retry:
+    instances:
+      paymentServiceRetry:
+        registerHealthIndicator: true
+        max-attempts: 2
+        retry-exceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.util.concurrent.TimeoutException
+          - java.io.IOException
+          - java.lang.RuntimeException
+        wait-duration: 10s
+
+
+
+
+
+
+
+
